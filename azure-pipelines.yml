@@ -1,0 +1,24 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'azure-cloud'
+    subscriptionId: '586fcfe6-4593-4209-9ad6-d67c40259478'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'srvrless-oh-test'
+    location: 'West Europe'
+    templateLocation: 'Linked artifact'
+    csmFile: '.\templates\azuredeploy.json'
+    csmParametersFile: '.\templates\azuredeploy.parameters.json'
+    deploymentMode: 'Incremental'
